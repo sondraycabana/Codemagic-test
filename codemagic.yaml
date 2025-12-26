@@ -24,7 +24,7 @@ workflows:
         firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
         android:
           app_id: "1:314617896266:android:b89eccb9c10d200869b5b3"
-        testers:
+        groups:
           - seunagbomola@gmail.com
 
       google_play:
