@@ -4,11 +4,10 @@ workflows:
     max_build_duration: 60
     environment:
       flutter: stable
-      android_signing:
-        - ANDROID_KEYSTORE
       groups:
         - firebase
         - google_cloud_credentials
+        - ANDROID_KEYSTORE
 
       vars:
         PACKAGE_NAME: "com.oluwaseun.codemagicdemo"
@@ -24,7 +23,7 @@ workflows:
     scripts:
       - name: Decode Keystore
         script: |
-          echo $ANDROID_KEYSTORE | base64 --decode > /tmp/upload-keystore.jks
+          echo $ANDROID_KEYSTORE | base64 --decode > /tmp/keystore.jks
       - flutter pub get
       - flutter analyze
       - flutter test || true
