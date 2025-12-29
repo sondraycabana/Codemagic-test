@@ -4,26 +4,18 @@ workflows:
     max_build_duration: 60
     environment:
       flutter: stable
+      android_signing:
+        - my_keystore
       groups:
         - firebase
         - google_cloud_credentials
-        - ANDROID_KEYSTORE
 
       vars:
         PACKAGE_NAME: "com.oluwaseun.codemagicdemo"
         BUILD_NUMBER: 3
 
-#    scripts:
-#      - flutter pub get
-#      - flutter analyze
-#      - flutter test || true
-#      - flutter build appbundle --release --build-number=$BUILD_NUMBER
-
 
     scripts:
-      - name: Decode Keystore
-        script: |
-          echo $ANDROID_KEYSTORE | base64 --decode > /tmp/keystore.jks
       - flutter pub get
       - flutter analyze
       - flutter test || true
