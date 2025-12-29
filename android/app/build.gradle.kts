@@ -41,15 +41,30 @@ android {
         versionName = flutter.versionName
     }
 
+
     signingConfigs {
         create("release") {
-            keyAlias = keystoreProperties["keyAlias"] as String
-            keyPassword = keystoreProperties["keyPassword"] as String
-            storeFile = file(keystoreProperties["storeFile"] as String)
-            storePassword = keystoreProperties["storePassword"] as String
+            // Prioritize Codemagic environment variables
+            val cmPath = System.getenv("CM_KEYSTORE_PATH")
+            val cmStorePassword = System.getenv("CM_KEYSTORE_PASSWORD")
+            val cmKeyAlias = System.getenv("CM_KEY_ALIAS")
+            val cmKeyPassword = System.getenv("CM_KEY_PASSWORD")
+
+            if (cmPath != null) {
+                // Use Codemagic's automatic signing credentials
+                storeFile = file(cmPath)
+                storePassword = cmStorePassword
+                keyAlias = cmKeyAlias
+                keyPassword = cmKeyPassword
+            } else if (keystorePropertiesFile.exists()) {
+                // Fallback to local key.properties for local builds
+                keyAlias = keystoreProperties["keyAlias"] as? String
+                keyPassword = keystoreProperties["keyPassword"] as? String
+                storeFile = (keystoreProperties["storeFile"] as? String)?.let { file(it) }
+                storePassword = keystoreProperties["storePassword"] as? String
+            }
         }
     }
-
 
 
     buildTypes {
