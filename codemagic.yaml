@@ -30,3 +30,4 @@ workflows:
       google_play:
         credentials: $GCLOUD_SERVICE_ACCOUNT
         track: internal
+        submit_as_draft: true
