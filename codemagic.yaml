@@ -7,12 +7,11 @@ workflows:
       android_signing:
         - my_keystore
       groups:
-        - firebase
         - google_cloud_credentials
 
       vars:
         PACKAGE_NAME: "com.oluwaseun.codemagicdemo"
-        BUILD_NUMBER: 3
+
 
 
     scripts:
@@ -28,11 +27,6 @@ workflows:
       - build/app/outputs/bundle/release/app-release.aab
 
     publishing:
-      firebase:
-        firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
-        android:
-          app_id: "1:314617896266:android:b89eccb9c10d200869b5b3"
-
       google_play:
         credentials: $GCLOUD_SERVICE_ACCOUNT
         track: internal
